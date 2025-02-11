@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <Config.h>
 #include <Scheduler.h>
+#include <LCD.h>
+#include <WPM.h>
 #include <GameManager.h>
 #include <Games/BinaryMath.h>
 #include <Games/LedSequence.h>
@@ -9,10 +11,13 @@
 
 static unsigned long lastMicros = 0;
 static double lastDeltaTime = 0.0;
-bool started = false;
+static bool started = false;
 
 Scheduler scheduler;
 GameManager gameManager;
+
+LCD lcd{LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS, scheduler};
+WPM wpm{WPM_STB, WPM_CLK, WPM_DIO, scheduler};
 
 void initialize() {
     // Clear scheduler tasks
@@ -23,10 +28,10 @@ void initialize() {
     lastDeltaTime = 0.0;
 
     // Register the games
-    gameManager.registerGame(std::make_unique<BinaryMath>());
-    gameManager.registerGame(std::make_unique<LedSequence>());
-    gameManager.registerGame(std::make_unique<MorseCodeTranslator>());
+    gameManager.registerGame(std::make_unique<MorseCodeTranslator>(scheduler, lcd));
     gameManager.registerGame(std::make_unique<VoltMatcher>());
+    gameManager.registerGame(std::make_unique<LedSequence>());
+    gameManager.registerGame(std::make_unique<BinaryMath>());
 
     // Register the game transitions
     gameManager.registerTransition<MorseCodeTranslator, VoltMatcher>();

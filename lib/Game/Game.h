@@ -6,6 +6,12 @@
 #define GAME_H
 
 #include <Arduino.h>
+#include <Scheduler.h>
+#include <Button.h>
+#include <LCD.h>
+#include <map>
+#include <string>
+#include <utility>
 
 /**
  * Abstract class for a game

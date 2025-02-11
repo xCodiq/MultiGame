@@ -6,27 +6,50 @@
 
 #include <TM1638plus.h>
 
-#define  STROBE_TM 4 // strobe = GPIO connected to strobe line of module
-#define  CLOCK_TM 6  // clock = GPIO connected to clock line of module
-#define  DIO_TM 7 // data = GPIO connected to data line of module
+#define  STROBE_TM 4
+#define  CLOCK_TM 6
+#define  DIO_TM 7
+TM1638plus tm(STROBE_TM, CLOCK_TM, DIO_TM, false);
 
-bool high_freq = false; //default false, If using a high freq CPU > ~100 MHZ set to true.
-
-// Constructor object (GPIO STB , GPIO CLOCK , GPIO DIO, use high freq MCU)
-TM1638plus tm(STROBE_TM, CLOCK_TM, DIO_TM, high_freq);
+MorseCodeTranslator::MorseCodeTranslator(Scheduler &scheduler, LCD &lcd) : m_scheduler(scheduler), m_lcd(lcd) {
+    // Fill the morse code map
+    this->m_morse_code_map['A'] = ".-";
+    this->m_morse_code_map['B'] = "-...";
+    this->m_morse_code_map['C'] = "-.-.";
+    this->m_morse_code_map['D'] = "-..";
+    this->m_morse_code_map['E'] = ".";
+    this->m_morse_code_map['F'] = "..-.";
+    this->m_morse_code_map['G'] = "--.";
+    this->m_morse_code_map['H'] = "....";
+    this->m_morse_code_map['I'] = "..";
+    this->m_morse_code_map['J'] = ".---";
+    this->m_morse_code_map['K'] = "-.-";
+    this->m_morse_code_map['L'] = ".-..";
+    this->m_morse_code_map['M'] = "--";
+    this->m_morse_code_map['N'] = "-.";
+    this->m_morse_code_map['O'] = "---";
+    this->m_morse_code_map['P'] = ".--.";
+    this->m_morse_code_map['Q'] = "--.-";
+    this->m_morse_code_map['R'] = ".-.";
+    this->m_morse_code_map['S'] = "...";
+    this->m_morse_code_map['T'] = "-";
+    this->m_morse_code_map['U'] = "..-";
+    this->m_morse_code_map['V'] = "...-";
+    this->m_morse_code_map['W'] = ".--";
+    this->m_morse_code_map['X'] = "-..-";
+    this->m_morse_code_map['Y'] = "-.--";
+    this->m_morse_code_map['Z'] = "--..";
+}
 
 void MorseCodeTranslator::setup() {
-    tm.displayBegin(); // Initialise display module
-    tm.reset(); // Clear the display
+    // tm.displayBegin(); tm.reset();
 }
 
 bool MorseCodeTranslator::finished() {
     return false;
-    // return Game::count == 10;
 }
 
 void MorseCodeTranslator::loop() {
-    tm.displayText("hllo.wrld");
 }
 
 void MorseCodeTranslator::end() {
