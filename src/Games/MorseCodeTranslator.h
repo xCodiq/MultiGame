@@ -14,8 +14,9 @@ public:
      *
      * @param scheduler the {@link Scheduler} instance
      * @param lcd the {@link LCD} instance
+     * @param wpm the {@link WPM} instance
      */
-    explicit MorseCodeTranslator(Scheduler &scheduler, LCD &lcd);
+    explicit MorseCodeTranslator(Scheduler &scheduler, LCD &lcd, WPM &wpm);
 
     // Overridden from Game
     void setup() override;
@@ -36,6 +37,7 @@ private:
     // Reference instances
     Scheduler &m_scheduler;
     LCD &m_lcd;
+    WPM &m_wpm;
 };
 
 

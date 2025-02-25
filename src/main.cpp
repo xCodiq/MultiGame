@@ -28,10 +28,10 @@ void initialize() {
     lastDeltaTime = 0.0;
 
     // Register the games
-    gameManager.registerGame(std::make_unique<MorseCodeTranslator>(scheduler, lcd));
+    gameManager.registerGame(std::make_unique<MorseCodeTranslator>(scheduler, lcd, wpm));
     gameManager.registerGame(std::make_unique<VoltMatcher>());
     gameManager.registerGame(std::make_unique<LedSequence>());
-    gameManager.registerGame(std::make_unique<BinaryMath>());
+    gameManager.registerGame(std::make_unique<BinaryMath>(wpm));
 
     // Register the game transitions
     gameManager.registerTransition<MorseCodeTranslator, VoltMatcher>();

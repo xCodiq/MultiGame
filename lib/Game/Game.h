@@ -5,10 +5,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+// unused #include directives are not removed, as they are needed for Game implementations
 #include <Arduino.h>
 #include <Scheduler.h>
 #include <Button.h>
 #include <LCD.h>
+#include <WPM.h>
 #include <map>
 #include <string>
 #include <utility>

@@ -4,14 +4,7 @@
 
 #include "MorseCodeTranslator.h"
 
-#include <TM1638plus.h>
-
-#define  STROBE_TM 4
-#define  CLOCK_TM 6
-#define  DIO_TM 7
-TM1638plus tm(STROBE_TM, CLOCK_TM, DIO_TM, false);
-
-MorseCodeTranslator::MorseCodeTranslator(Scheduler &scheduler, LCD &lcd) : m_scheduler(scheduler), m_lcd(lcd) {
+MorseCodeTranslator::MorseCodeTranslator(Scheduler &scheduler, LCD &lcd, WPM &wpm) : m_scheduler(scheduler), m_lcd(lcd), m_wpm(wpm) {
     // Fill the morse code map
     this->m_morse_code_map['A'] = ".-";
     this->m_morse_code_map['B'] = "-...";
@@ -42,7 +35,7 @@ MorseCodeTranslator::MorseCodeTranslator(Scheduler &scheduler, LCD &lcd) : m_sch
 }
 
 void MorseCodeTranslator::setup() {
-    // tm.displayBegin(); tm.reset();
+    this->m_wpm.clear();
 }
 
 bool MorseCodeTranslator::finished() {
@@ -53,7 +46,6 @@ void MorseCodeTranslator::loop() {
 }
 
 void MorseCodeTranslator::end() {
-    Serial.println("MorseCodeTranslator ended");
 }
 
 /*
